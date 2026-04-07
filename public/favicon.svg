@@ -1,0 +1,42 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="60" x2="430" y2="452" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C764FF"/>
+      <stop offset="0.45" stop-color="#5F2DAA"/>
+      <stop offset="1" stop-color="#09051B"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="145" y1="170" x2="372" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67F0FF"/>
+      <stop offset="1" stop-color="#E287FF"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="167" y1="184" x2="347" y2="306" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A1B6A"/>
+      <stop offset="1" stop-color="#171239"/>
+    </linearGradient>
+    <filter id="shadow" x="100" y="126" width="320" height="280" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="10" dy="12" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glow" x="100" y="340" width="312" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect x="74" y="74" width="364" height="364" rx="72" fill="url(#bg)"/>
+  <ellipse cx="256" cy="384" rx="108" ry="18" fill="#5E35FF" opacity="0.6" filter="url(#glow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="142" y="152" width="228" height="166" rx="18" fill="none" stroke="url(#glass)" stroke-width="14"/>
+    <rect x="158" y="170" width="196" height="116" rx="6" fill="url(#screen)"/>
+    <path d="M214 227L181 256L214 283" stroke="url(#glass)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M298 227L331 256L298 283" stroke="#E58EFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M272 210L240 302" stroke="#D98FFF" stroke-width="15" stroke-linecap="round"/>
+    <path d="M224 318H288C288 348 307 355 319 358V364H193V358C205 355 224 348 224 318Z" fill="url(#glass)"/>
+    <rect x="248" y="296" width="16" height="8" rx="4" fill="#87EFFF" opacity="0.7"/>
+  </g>
+
+  <g fill="#FFD46B">
+    <path d="M357 148L363 163L378 169L363 175L357 190L351 175L336 169L351 163L357 148Z"/>
+    <path d="M388 172L394 186L408 192L394 198L388 212L382 198L368 192L382 186L388 172Z"/>
+    <path d="M335 185L339 194L348 198L339 202L335 211L331 202L322 198L331 194L335 185Z"/>
+  </g>
+</svg>

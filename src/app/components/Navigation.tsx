@@ -26,6 +26,7 @@ export function Navigation() {
   return (
     <>
       <motion.nav
+        aria-label="Navegação principal"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-background/80 backdrop-blur-lg border-b border-border"
@@ -35,13 +36,15 @@ export function Navigation() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6 md:px-4 md:py-4">
           <motion.a
             href="#"
-            className="text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+            title="Voltar ao topo"
+            aria-label="Voltar ao topo"
+            className="text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background md:text-2xl"
             whileHover={{ scale: 1.05 }}
           >
-            JS.
+            MF.
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -50,7 +53,7 @@ export function Navigation() {
               <motion.a
                 key={index}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors relative group"
+                className="text-foreground/80 hover:text-primary transition-colors relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
                 whileHover={{ scale: 1.05 }}
               >
                 {item.label}
@@ -61,8 +64,13 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden w-10 h-10 flex items-center justify-center"
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            title={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-controls="menu-mobile"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -76,6 +84,10 @@ export function Navigation() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div
+          id="menu-mobile"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu de navegação móvel"
           className="fixed inset-0 z-40 bg-background/95 backdrop-blur-lg md:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -86,7 +98,7 @@ export function Navigation() {
               <motion.a
                 key={index}
                 href={item.href}
-                className="text-2xl text-foreground/80 hover:text-primary transition-colors"
+                className="text-2xl text-foreground/80 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
                 onClick={() => setIsMobileMenuOpen(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

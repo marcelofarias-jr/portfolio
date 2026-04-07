@@ -5,22 +5,25 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 px-4 border-t border-border">
+    <footer className="border-t border-border px-5 py-10 sm:px-6 md:px-4 md:py-12">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col items-center justify-between gap-3 text-center md:flex-row md:gap-4 md:text-left">
           <motion.div
-            className="flex items-center gap-2 text-muted-foreground"
+            className="flex flex-wrap items-center justify-center gap-2 text-muted-foreground md:justify-start"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
             <span>© {currentYear} Marcelo Farias. Feito com</span>
-            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+            <Heart
+              aria-hidden="true"
+              className="w-4 h-4 text-red-500 fill-red-500"
+            />
             <span>e React</span>
           </motion.div>
 
           <motion.div
-            className="flex gap-6"
+            className="flex flex-wrap justify-center gap-4 sm:gap-6 md:justify-end"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -30,7 +33,8 @@ export function Footer() {
               href="https://github.com/marcelofarias-jr"
               target="_blank"
               rel="noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Abrir perfil do GitHub"
+              className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
             >
               GitHub
             </a>
@@ -38,7 +42,8 @@ export function Footer() {
               href="https://www.linkedin.com/in/marcelo-farias-a4337722/"
               target="_blank"
               rel="noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Abrir perfil do LinkedIn"
+              className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
             >
               LinkedIn
             </a>

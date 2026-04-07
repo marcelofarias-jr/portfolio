@@ -43,33 +43,43 @@ export function Skills() {
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="habilidades" className="py-24 px-4" ref={ref}>
+    <section
+      id="habilidades"
+      aria-labelledby="skills-title"
+      className="px-5 py-20 sm:px-6 sm:py-24 md:px-4"
+      ref={ref}
+    >
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center mb-16"
+          className="mb-12 text-center md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-4xl md:text-5xl mb-4">Habilidades</h2>
-          <p className="text-muted-foreground text-lg">
+          <h2
+            id="skills-title"
+            className="mb-4 text-3xl sm:text-4xl md:text-5xl"
+          >
+            Habilidades
+          </h2>
+          <p className="mx-auto max-w-2xl text-base text-muted-foreground sm:text-lg">
             Stack e práticas aplicadas na minha experiência profissional
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-8">
           {skills.map((skillGroup, groupIndex) => (
             <motion.div
               key={groupIndex}
-              className="p-6 rounded-2xl bg-card border border-border"
+              className="rounded-2xl border border-border bg-card p-5 md:p-6"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
             >
-              <h3 className="text-xl mb-6 text-primary">
+              <h3 className="mb-5 text-xl text-primary md:mb-6">
                 {skillGroup.category}
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {skillGroup.items.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-2">
@@ -78,7 +88,15 @@ export function Skills() {
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                    <div
+                      className="h-2 bg-secondary rounded-full overflow-hidden"
+                      role="progressbar"
+                      aria-label={`${skill.name}`}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={skill.level}
+                      aria-valuetext={`${skill.level}% de proficiência em ${skill.name}`}
+                    >
                       <motion.div
                         className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
                         initial={{ width: 0 }}
