@@ -6,6 +6,32 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const projects = [
   {
+    title: "Almoxarifado Canela",
+    description:
+      "Sistema interno de gestão de almoxarifado construído para o Estúdio Canela Seca. Contempla controle de itens em estoque, cadastro e gerenciamento de usuários, log de auditoria de todas as ações e autenticação com proteção de rotas via middleware do Next.js e NextAuth v5.",
+    image: "/projects/almoxarifado-canela.webp",
+    tags: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "Prisma",
+      "NextAuth",
+      "PostgreSQL",
+    ],
+    github: null,
+    demo: null,
+  },
+  {
+    title: "Ateliê Darah",
+    description:
+      "Site de portfólio para artista multidisciplinar com galeria filtrada por categoria, páginas de detalhe por obra e formulário de contato. Desenvolvido com foco em performance, SEO e acessibilidade usando Next.js 15 com App Router.",
+    image: "/projects/ateliedarah.webp",
+    tags: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui"],
+    github: "https://github.com/marcelofarias-jr/ateliedarah",
+    demo: "https://ateliedarah.vercel.app/",
+  },
+  {
     title: "Blog Next",
     description:
       "Blog com foco em SEO, performance e arquitetura moderna, usando Next.js para combinar boa experiência de leitura com renderização eficiente.",
@@ -108,32 +134,38 @@ export function Projects() {
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-4">
-                  <motion.a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    title={`Ver código de ${project.title}`}
-                    aria-label={`Ver código de ${project.title}`}
-                    className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Github aria-hidden="true" className="w-5 h-5" />
-                  </motion.a>
-                  <motion.a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noreferrer"
-                    title={`Abrir projeto ${project.title}`}
-                    aria-label={`Abrir projeto ${project.title}`}
-                    className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <ExternalLink aria-hidden="true" className="w-5 h-5" />
-                  </motion.a>
-                </div>
+                {(project.github || project.demo) && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-4">
+                    {project.github && (
+                      <motion.a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Ver código de ${project.title}`}
+                        aria-label={`Ver código de ${project.title}`}
+                        className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Github aria-hidden="true" className="w-5 h-5" />
+                      </motion.a>
+                    )}
+                    {project.demo && (
+                      <motion.a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Abrir projeto ${project.title}`}
+                        aria-label={`Abrir projeto ${project.title}`}
+                        className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <ExternalLink aria-hidden="true" className="w-5 h-5" />
+                      </motion.a>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="p-5 md:p-6">
