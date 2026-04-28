@@ -131,7 +131,7 @@ export function Projects() {
             <motion.article
               key={index}
               aria-labelledby={`project-title-${index}`}
-              className="group rounded-2xl overflow-hidden bg-card border border-border hover:border-primary transition-all duration-300"
+              className="group flex flex-col rounded-2xl overflow-hidden bg-card border border-border hover:border-primary transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -143,41 +143,9 @@ export function Projects() {
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                {(project.github || project.demo) && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-4">
-                    {project.github && (
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        title={`Ver código de ${project.title}`}
-                        aria-label={`Ver código de ${project.title}`}
-                        className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Github aria-hidden="true" className="w-5 h-5" />
-                      </motion.a>
-                    )}
-                    {project.demo && (
-                      <motion.a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noreferrer"
-                        title={`Abrir projeto ${project.title}`}
-                        aria-label={`Abrir projeto ${project.title}`}
-                        className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <ExternalLink aria-hidden="true" className="w-5 h-5" />
-                      </motion.a>
-                    )}
-                  </div>
-                )}
               </div>
 
-              <div className="p-5 md:p-6">
+              <div className="p-5 md:p-6 flex flex-col flex-1">
                 <h3
                   id={`project-title-${index}`}
                   className="mb-2 text-xl md:text-2xl"
@@ -187,7 +155,7 @@ export function Projects() {
                 <p className="mb-5 text-muted-foreground leading-relaxed">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-5">
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
@@ -197,6 +165,34 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
+                {(project.github || project.demo) && (
+                  <div className="flex gap-3 mt-auto">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Ver código de ${project.title}`}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:border-primary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        <Github aria-hidden="true" className="w-4 h-4" />
+                        Ver código
+                      </a>
+                    )}
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Ver site de ${project.title}`}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        <ExternalLink aria-hidden="true" className="w-4 h-4" />
+                        Visitar
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.article>
           ))}
