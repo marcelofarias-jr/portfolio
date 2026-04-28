@@ -77,6 +77,15 @@ const projects = [
     demo: "https://marcelofarias-jr.github.io/wetalkie/",
   },
   {
+    title: "PlayVideos",
+    description:
+      "Plataforma de streaming inspirada na Netflix, desenvolvida com HTML, CSS e JavaScript puro — sem frameworks. Conta com carousel infinito, swipe mobile, navegação por teclado e catálogo separado por categoria.",
+    image: "/projects/playvideos.webp",
+    tags: ["HTML5", "CSS3", "JavaScript ES6+", "GitHub Pages"],
+    github: "https://github.com/marcelofarias-jr/playvideos",
+    demo: "https://marcelofarias-jr.github.io/playvideos/",
+  },
+  {
     title: "Biscoitos Erika",
     description:
       "Site institucional responsivo desenvolvido para fortalecer a presença digital da marca com entrega rápida e manutenção acessível.",
