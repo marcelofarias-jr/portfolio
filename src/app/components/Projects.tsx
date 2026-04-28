@@ -1,8 +1,9 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef } from "react";
-import { ExternalLink, Github } from "lucide-react";
+import { useRef, useCallback, useEffect, useState } from "react";
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import useEmblaCarousel from "embla-carousel-react";
 
 const projects = [
   {
@@ -100,6 +101,27 @@ export function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    slidesToScroll: 1,
+  });
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
+
   return (
     <section
       id="projetos"
@@ -121,82 +143,132 @@ export function Projects() {
             Projetos em Destaque
           </h2>
           <p className="mx-auto max-w-3xl text-base text-muted-foreground sm:text-lg">
-            Projetos com escolhas de stack pensadas para SEO, manutencao,
+            Projetos com escolhas de stack pensadas para SEO, manutenção,
             performance e velocidade de entrega
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 md:gap-8">
-          {projects.map((project, index) => (
-            <motion.article
-              key={index}
-              aria-labelledby={`project-title-${index}`}
-              className="group flex flex-col rounded-2xl overflow-hidden bg-card border border-border hover:border-primary transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-            >
-              <div className="relative overflow-hidden aspect-video">
-                <ImageWithFallback
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-
-              <div className="p-5 md:p-6 flex flex-col flex-1">
-                <h3
-                  id={`project-title-${index}`}
-                  className="mb-2 text-xl md:text-2xl"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex ml-[-24px] md:ml-[-32px]">
+              {projects.map((project, index) => (
+                <div
+                  key={index}
+                  className="flex-none w-full sm:w-1/2 pl-6 md:pl-8"
                 >
-                  {project.title}
-                </h3>
-                <p className="mb-5 text-muted-foreground leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary border border-primary/20"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  <article
+                    aria-labelledby={`project-title-${index}`}
+                    className="group flex flex-col rounded-2xl overflow-hidden bg-card border-2 border-white/15 hover:border-primary transition-all duration-300 h-full"
+                  >
+                    <div className="relative overflow-hidden aspect-video">
+                      <ImageWithFallback
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+
+                    <div className="p-5 md:p-6 flex flex-col flex-1">
+                      <h3
+                        id={`project-title-${index}`}
+                        className="mb-2 text-xl md:text-2xl"
+                      >
+                        {project.title}
+                      </h3>
+                      <p className="mb-5 text-muted-foreground leading-relaxed">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-5">
+                        {project.tags.map((tag, tagIndex) => (
+                          <span
+                            key={tagIndex}
+                            className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary border border-primary/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      {(project.github || project.demo) && (
+                        <div className="flex gap-3 mt-auto">
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label={`Ver código de ${project.title}`}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:border-primary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            >
+                              <Github aria-hidden="true" className="w-4 h-4" />
+                              Ver código
+                            </a>
+                          )}
+                          {project.demo && (
+                            <a
+                              href={project.demo}
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label={`Ver site de ${project.title}`}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            >
+                              <ExternalLink
+                                aria-hidden="true"
+                                className="w-4 h-4"
+                              />
+                              Visitar
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </article>
                 </div>
-                {(project.github || project.demo) && (
-                  <div className="flex gap-3 mt-auto">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Ver código de ${project.title}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:border-primary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                      >
-                        <Github aria-hidden="true" className="w-4 h-4" />
-                        Ver código
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Ver site de ${project.title}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                      >
-                        <ExternalLink aria-hidden="true" className="w-4 h-4" />
-                        Visitar
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </motion.article>
-          ))}
-        </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={scrollPrev}
+              aria-label="Projeto anterior"
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+            </button>
+
+            <div
+              className="flex gap-2"
+              role="tablist"
+              aria-label="Navegação do carousel"
+            >
+              {projects.map((_, i) => (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={i === selectedIndex}
+                  aria-label={`Ir para projeto ${i + 1}`}
+                  onClick={() => emblaApi?.scrollTo(i)}
+                  className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                    i === selectedIndex
+                      ? "w-6 bg-primary"
+                      : "w-2 bg-border hover:bg-muted-foreground"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={scrollNext}
+              aria-label="Próximo projeto"
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <ChevronRight className="w-5 h-5" aria-hidden="true" />
+            </button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
